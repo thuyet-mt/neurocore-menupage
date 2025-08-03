@@ -1,0 +1,45 @@
+.mode-btn-root {
+  position: relative;
+  width: 369px;
+  height: 80px;
+  right: 64000px;
+  top: 880px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.mode-btn-frame {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 16px;
+  width: 369px;
+  height: 80px;
+  cursor: pointer;
+  position: relative;
+}
+
+.mode-btn-label {
+  width: 115px;
+  height: 25px;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #FAECD2;
+  user-select: none;
+}
+
+.mode-btn-svg {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} 

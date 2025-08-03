@@ -1,0 +1,77 @@
+.container-frame {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(8px, 1vw, 16px);
+  gap: clamp(12px, 2vw, 16px);
+
+  position: absolute;
+  width: clamp(280px, 25vw, 337px);
+  height: clamp(60px, 8vh, 80px);
+  right: clamp(40px, 4vw, 64px);
+  bottom: clamp(40px, 4vw, 64px);
+  
+  /* Tạm thời thêm border để dễ nhận biết */
+  /* border: 2px dashed #ff0000; */
+  /* background-color: rgba(255, 0, 0, 0.1); */
+  
+  /* Đảm bảo không vượt ra ngoài background */
+  max-width: calc(100vw - clamp(80px, 8vw, 128px));
+  max-height: calc(100vh - clamp(120px, 12vh, 176px));
+}
+
+/* Container cho ModeButton */
+.mode-button-container {
+  /* Vị trí tương đối trong ContainerFrame */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Có thể tùy chỉnh vị trí */
+  margin-left: auto; /* Đẩy sang phải */
+  /* margin-right: auto; */ /* Đẩy sang trái */
+  /* margin: 0 auto; */ /* Căn giữa */
+}
+
+/* Tùy chỉnh vị trí ModeButton */
+.mode-button-container.left {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.mode-button-container.center {
+  margin: 0 auto;
+}
+
+.mode-button-container.right {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+  .container-frame {
+    width: clamp(250px, 30vw, 280px);
+    height: clamp(50px, 6vh, 60px);
+    right: clamp(20px, 3vw, 40px);
+    bottom: clamp(20px, 3vw, 40px);
+  }
+}
+
+@media (max-width: 480px) {
+  .container-frame {
+    width: clamp(200px, 35vw, 250px);
+    height: clamp(40px, 5vh, 50px);
+    right: clamp(10px, 2vw, 20px);
+    bottom: clamp(10px, 2vw, 20px);
+  }
+}
+
+@media (max-width: 360px) {
+  .container-frame {
+    width: clamp(180px, 40vw, 200px);
+    height: clamp(35px, 4vh, 40px);
+  }
+} 
