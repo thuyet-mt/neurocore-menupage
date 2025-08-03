@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
 import webChannelService from '../services/WebChannelService';
-import './Neurobase.css';
+import './Neurocore.css';
 import backgroundImg from "../assets/background_menu.png";
 // import logoImg from "../assets/logo_neuro.png"; // Replaced with 3D logo
 import MenuButton from "./MenuButton";
@@ -16,15 +16,15 @@ import ProgressBar from "./ProgressBar";
 // 3D Logo Components
 import { Canvas } from '@react-three/fiber';
 import Logo3DModel from "./Logo3DModel";
-// import Logo from "../assets/archives_icon.png";
-import ArchivesIcon from "../assets/archives_icon.svg";
+
 import TelephoneIcon from "../assets/telephone_icon.svg";
-import AccueilIcon from "../assets/accueil_icon.svg"
-import ReunionIcon from "../assets/reunion_icon.svg"
-import CommandesIcon from "../assets/commandes_icon.svg"
-import EmailsIcon from "../assets/email_icon.svg"
-import AgendaIcon from "../assets/agenda_icon.svg"
-import ColisIcon from "../assets/colis_icon.svg"
+import NeurostatIcon from "../assets/neurostat_icon.svg"
+import NeurolabIcon from "../assets/neurolab_icon.svg"
+import NeurotoolsIcon from "../assets/neurotools_icon.svg"
+import NeurobaseIcon from "../assets/neurobase_icon.svg"
+import NeuropacksIcon from "../assets/neuropacks_icon.svg"
+import NeurocontrolIcon from "../assets/neurocontrol_icon.svg"
+import NeuroalertIcon from "../assets/neuroalert_icon.svg"
 import BackButton from "./BackButton";
 import BackIcon from "../assets/back_icon.svg";
 
@@ -41,7 +41,7 @@ const debounce = (func, wait) => {
   };
 };
 
-export default function Neurobase() {
+export default function Neurocore() {
   const { currentMode } = useTheme();
   const { getText, getTextWithParams, loading, error } = useLanguage();
   const [showNotification, setShowNotification] = useState(false);
@@ -134,12 +134,12 @@ export default function Neurobase() {
 
   // === Handler functions với WebChannel integration ===
 
-  const handleGoldenButtonClick = useCallback(
+  const handleNeurocontrolButtonClick = useCallback(
     debounce(() => {
       callSlotWithNotification(
-        () => webChannelService.openArchives(),
-        getText("archives_opened"),
-        getText("archives_failed")
+        () => webChannelService.openNeurocontrol(),
+        getText("neurocontrol_opened"),
+        getText("neurocontrol_failed")
       );
     }, 100),
     [getText]
@@ -156,23 +156,23 @@ export default function Neurobase() {
     [getText]
   );
 
-  const handleReunionButtonClick = useCallback(
+  const handleNeurolabButtonClick = useCallback(
     debounce(() => {
       callSlotWithNotification(
-        () => webChannelService.openReunions(),
-        getText("reunions_opened"),
-        getText("reunions_failed")
+        () => webChannelService.openNeurolab(),
+        getText("neurolab_opened"),
+        getText("neurolab_failed")
       );
     }, 100),
     [getText]
   );
 
-  const handleAccueilButtonClick = useCallback(
+  const handleNeurostatButtonClick = useCallback(
     debounce(() => {
       callSlotWithNotification(
-        () => webChannelService.openAccueil(),
-        getText("accueil_opened"),
-        getText("accueil_failed")
+        () => webChannelService.openNeurostat(),
+        getText("neurostat_opened"),
+        getText("neurostat_failed")
       );
     }, 100),
     [getText]
@@ -189,27 +189,27 @@ export default function Neurobase() {
     [getText]
   );
 
-  const handleEmailsButtonClick = () => {
+  const handleNeurobaseButtonClick = () => {
     callSlotWithNotification(
-      () => webChannelService.openEmails(),
-      getText("emails_opened"),
-      getText("emails_failed")
+      () => webChannelService.openNeurobase(),
+      getText("neurobase_opened"),
+      getText("neurobase_failed")
     );
   };
 
-  const handleAgendaButtonClick = () => {
+  const handleNeuroalertButtonClick = () => {
     callSlotWithNotification(
-      () => webChannelService.openAgenda(),
-      getText("agenda_opened"),
-      getText("agenda_failed")
+      () => webChannelService.openNeuroalert(),
+      getText("neuroalert_opened"),
+      getText("neuroalert_failed")
     );
   };
 
-  const handleColisButtonClick = () => {
+  const handleNeuropacksButtonClick = () => {
     callSlotWithNotification(
-      () => webChannelService.openColis(),
-      getText("colis_opened"),
-      getText("colis_failed")
+      () => webChannelService.openNeuropacks(),
+      getText("neuropacks_opened"),
+      getText("neuropacks_failed")
     );
   };
 
@@ -293,7 +293,7 @@ export default function Neurobase() {
   // Show loading state if language data is still loading
   if (loading) {
     return (
-      <div className="neurobase-root" style={getThemeStyles()}>
+      <div className="neurocore-root" style={getThemeStyles()}>
         <div style={{ 
           display: 'flex', 
           justifyContent: 'center', 
@@ -311,7 +311,7 @@ export default function Neurobase() {
   // Show error state if language loading failed
   if (error) {
     return (
-      <div className="neurobase-root" style={getThemeStyles()}>
+      <div className="neurocore-root" style={getThemeStyles()}>
         <div style={{ 
           display: 'flex', 
           justifyContent: 'center', 
@@ -328,13 +328,13 @@ export default function Neurobase() {
 
   return (
     <div 
-      className="neurobase-root" 
+      className="neurocore-root" 
       style={getThemeStyles()} 
       data-theme={currentMode}
       onWheel={handleWheel}
     >
-      <div className="neurobase-bg" />
-      <div className="neurobase-image-bg">
+      <div className="neurocore-bg" />
+      <div className="neurocore-image-bg">
         <img 
           src={backgroundImg} 
           alt="background" 
@@ -345,7 +345,7 @@ export default function Neurobase() {
           }}
         />
       </div>
-      <div className="neurobase-logo">
+      <div className="neurocore-logo">
         <div style={{
           width: '100%',
           height: '100%',
@@ -386,12 +386,12 @@ export default function Neurobase() {
           </Canvas>
         </div>
       </div>
-      <h1 className="neurobase-title">{getText("title")}</h1>
+      <h1 className="neurocore-title">{getText("title")}</h1>
       {/* Menu Button ở góc trên bên phải */}
       <MenuButton onClick={handleMenuButtonClick} />
       {/* Back Button */}
       {/* <BackButton tooltip="Quay lại" onClick={handleBackButtonClick} /> */}
-      <BackButton 
+      {/* <BackButton 
         theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'balance'}
         onClick={handleBackButtonClick}
         tooltip={getText("back")}
@@ -413,14 +413,14 @@ export default function Neurobase() {
             </div>          
           </div>
         }
-      />
+      /> */}
       
-      {/* Archives Button với vị trí tương đối so với Menu Container Frame */}
-      <div className="button-archives">
-        <GoldenButton
+      {/* Neurocontrol Button với vị trí tương đối so với Menu Container Frame */}
+      <div className="button-neurocontrol">
+        <GoldenButton 
           theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
-          onClick={handleGoldenButtonClick}
-          tooltip="Golden Button - Click me! ✨"
+          onClick={handleNeurocontrolButtonClick}
+          tooltip="Neurocontrol Button - Click me! ✨"
           tooltipPosition="top"
           size="100%"
           icon={
@@ -431,9 +431,9 @@ export default function Neurobase() {
               justifyContent: 'center',
               gap: '10px'
             }}>
-              <img src={ArchivesIcon} alt="logo"/>
+              <img src={NeurocontrolIcon} alt="logo"/>
               <div style={getResponsiveTextStyle(23)}>
-                {getText("archives")}
+                {getText("neurocontrol")}
               </div>
             </div>
           }
@@ -465,12 +465,12 @@ export default function Neurobase() {
         />
       </div>
 
-      {/* Reunion Button */}
-      <div className="button-reunion">
+      {/* Neurolab Button */}
+      <div className="button-neurolab">
         <GoldenButton
           theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
-          onClick={handleReunionButtonClick}
-          tooltip="Reunion Button - Click me! 👥"
+          onClick={handleNeurolabButtonClick}
+          tooltip="Neurolab Button - Click me! 👥"
           tooltipPosition="top"
           size="100%"
           icon={
@@ -481,21 +481,21 @@ export default function Neurobase() {
               justifyContent: 'center',
               gap: '10px'
             }}>
-              <img src={ReunionIcon} alt="logo"/>
+              <img src={NeurolabIcon} alt="logo"/>
               <div style={getResponsiveTextStyle(23)}>
-                {getText("reunions")}
+                {getText("neurolab")}
               </div>
             </div>
           }
         />
       </div>
 
-      {/* Accueil Button */}
-      <div className="button-accueil">
+      {/* Neurostat Button */}
+      <div className="button-neurostat">
         <GoldenButton
           theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
-          onClick={handleAccueilButtonClick}
-          tooltip="Accueil Button - Click me! 🏠"
+          onClick={handleNeurostatButtonClick}
+          tooltip="Neurostat Button - Click me! 🏠"
           tooltipPosition="top"
           size="100%"
           icon={
@@ -506,9 +506,9 @@ export default function Neurobase() {
               justifyContent: 'center',
               gap: '10px'
             }}>
-              <img src={AccueilIcon} alt="logo"/>
+              <img src={NeurostatIcon} alt="logo"/>
               <div style={getResponsiveTextStyle(23)}>
-                {getText("accueil")}
+                {getText("neurostat")}
               </div>
             </div>
           }
@@ -516,11 +516,11 @@ export default function Neurobase() {
       </div>
 
       {/* Commandes Button */}
-      <div className="button-commandes">
+      <div className="button-neurotools">
         <GoldenButton
           theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
           onClick={handleCommandesButtonClick}
-          tooltip="Commandes Button - Click me! 📋"
+          tooltip="Neurotools Button - Click me! 📋"
           tooltipPosition="top"
           size="100%"
           icon={
@@ -531,21 +531,21 @@ export default function Neurobase() {
               justifyContent: 'center',
               gap: '10px'
             }}>
-              <img src={CommandesIcon} alt="logo"/>
+              <img src={NeurotoolsIcon} alt="logo"/>
               <div style={getResponsiveTextStyle(23)}>
-                {getText("commandes")}
+                {getText("neurotools")}
               </div>
             </div>
           }
         />
       </div>
 
-      {/* Emails Button */}
-      <div className="button-emails">
+      {/* Neurobase Button */}
+      <div className="button-neurobase">
         <GoldenButton
           theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
-          onClick={handleEmailsButtonClick}
-          tooltip="Emails Button - Click me! 📧"
+          onClick={handleNeurobaseButtonClick}
+          tooltip="Neurobase Button - Click me! 📧"
           tooltipPosition="top"
           size="100%"
           icon={
@@ -556,21 +556,21 @@ export default function Neurobase() {
               justifyContent: 'center',
               gap: '10px'
             }}>
-              <img src={EmailsIcon} alt="logo"/>
+              <img src={NeurobaseIcon} alt="logo"/>
               <div style={getResponsiveTextStyle(23)}>
-                {getText("emails")}
+                {getText("neurobase")}
               </div>
             </div>
           }
         />
       </div>
 
-      {/* Agenda Button */}
-      <div className="button-agenda">
+      {/* Neuroalert Button */}
+      <div className="button-neuroalert">
         <GoldenButton
           theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
-          onClick={handleAgendaButtonClick}
-          tooltip="Agenda Button - Click me! 📅"
+          onClick={handleNeuroalertButtonClick}
+          tooltip="Neuroalert Button - Click me! 📅"
           tooltipPosition="top"
           size="100%"
           icon={
@@ -581,21 +581,21 @@ export default function Neurobase() {
               justifyContent: 'center',
               gap: '10px'
             }}>
-              <img src={AgendaIcon} alt="logo"/>
+              <img src={NeuroalertIcon} alt="logo"/>
               <div style={getResponsiveTextStyle(23)}>
-                {getText("agenda")}
+                {getText("neuroalert")}
               </div>
             </div>
           }
         />
       </div>
 
-      {/* Colis Button */}
-      <div className="button-colis">
+      {/* Neuropacks Button */}
+      <div className="button-neuropacks">
         <GoldenButton
           theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
-          onClick={handleColisButtonClick}
-          tooltip="Colis Button - Click me! 📦"
+          onClick={handleNeuropacksButtonClick}
+          tooltip="Neuropacks Button - Click me! 📦"
           tooltipPosition="top"
           size="100%"
           icon={
@@ -606,9 +606,9 @@ export default function Neurobase() {
               justifyContent: 'center',
               gap: '10px'
             }}>
-              <img src={ColisIcon} alt="logo"/>
+              <img src={NeuropacksIcon} alt="logo"/>
               <div style={getResponsiveTextStyle(23)}>
-                {getText("colis")}
+                {getText("neuropacks")}
               </div>
             </div>
           }

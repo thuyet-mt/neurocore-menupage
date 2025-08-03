@@ -1,4 +1,4 @@
-.neurobase-root {
+.neurocore-root {
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -9,14 +9,20 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: scroll;
   min-height: 100vh;
   min-width: 100vw;
+  /* Prevent unwanted zooming */
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* Ensure background scales properly on all devices */
 @media (max-width: 768px) {
-  .neurobase-root {
+  .neurocore-root {
     background-size: cover;
     background-position: center;
     background-attachment: scroll;
@@ -24,13 +30,13 @@
 }
 
 @media (max-width: 480px) {
-  .neurobase-root {
+  .neurocore-root {
     background-size: cover;
     background-position: center;
   }
 }
 
-.neurobase-bg {
+.neurocore-bg {
   position: absolute;
   top: 0;
   left: 0;
@@ -39,7 +45,7 @@
   z-index: 1;
 }
 
-.neurobase-image-bg {
+.neurocore-image-bg {
   position: absolute;
   top: 0;
   left: 0;
@@ -54,22 +60,22 @@
 }
 
 /* Theme-specific background colors */
-.neurobase-root[data-theme="light"] .neurobase-image-bg {
+.neurocore-root[data-theme="light"] .neurocore-image-bg {
   background: var(--Background-Light, #E4DAC2);
 }
 
-.neurobase-root[data-theme="dark"] .neurobase-image-bg {
+.neurocore-root[data-theme="dark"] .neurocore-image-bg {
   background: var(--Background-Dark, #030303);
 }
 
-.neurobase-root[data-theme="balance"] .neurobase-image-bg {
+.neurocore-root[data-theme="balance"] .neurocore-image-bg {
   background: var(--Background-Balance, #615637);
 }
 
-.neurobase-image-bg img {
+.neurocore-image-bg img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   opacity: 1;
   transform: rotate(0deg);
@@ -84,28 +90,28 @@
 
 /* Ensure background image scales properly on all screen sizes */
 @media (max-width: 768px) {
-  .neurobase-image-bg img {
-    object-fit: contain;
+  .neurocore-image-bg img {
+    object-fit: cover;
     object-position: center;
   }
 }
 
 @media (max-width: 480px) {
-  .neurobase-image-bg img {
-    object-fit: contain;
+  .neurocore-image-bg img {
+    object-fit: cover;
     object-position: center;
   }
 }
 
 /* Landscape orientation support for background */
 @media (max-height: 600px) and (orientation: landscape) {
-  .neurobase-image-bg img {
-    object-fit: contain;
+  .neurocore-image-bg img {
+    object-fit: cover;
     object-position: center;
   }
 }
 
-.neurobase-logo {
+.neurocore-logo {
   position: absolute;
   width: clamp(120px, 12vw, 180px);
   height: clamp(120px, 12vw, 180px);
@@ -114,31 +120,32 @@
   z-index: 3;
 }
 
-.neurobase-logo img {
+.neurocore-logo img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
 /* 3D Logo Container Styles */
-.neurobase-logo canvas {
+.neurocore-logo canvas {
   width: 100% !important;
   height: 100% !important;
   border-radius: 12px;
   overflow: hidden;
 }
 
-.neurobase-logo > div {
+.neurocore-logo > div {
   width: 100% !important;
   height: 100% !important;
   border-radius: 12px;
   overflow: hidden;
 }
 
-.neurobase-title {
+.neurocore-title {
   position: absolute;
-  width: 279px;
-  left: calc(50% - 279px/2 + 0.5px);
+  width: auto;
+  max-width: 90vw;
+  left: 50%;
   top: 7.03%;
   bottom: 86.72%;
   font-family: 'Open Sans', sans-serif;
@@ -154,62 +161,62 @@
   z-index: 3;
   margin: 0;
   text-transform: uppercase;
+  transform: translateX(-50%);
 }
 
 /* Theme-specific styles for NEUROBASE title */
-.neurobase-root[data-theme="light"] .neurobase-title {
+.neurocore-root[data-theme="light"] .neurocore-title {
   color: #A87815;
-  left: calc(50% - 279px/2 + 0.5px);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.neurobase-root[data-theme="balance"] .neurobase-title {
+.neurocore-root[data-theme="balance"] .neurocore-title {
   color: #DFAA2E;
-  left: calc(50% - 279px/2 + 1px);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.neurobase-root[data-theme="dark"] .neurobase-title {
+.neurocore-root[data-theme="dark"] .neurocore-title {
   color: #BC8C1D;
-  left: calc(50% - 279px/2 + 1px);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* Responsive theme-specific positioning */
 @media (max-width: 1200px) {
-  .neurobase-root[data-theme="light"] .neurobase-title {
-    left: calc(50% - 260px/2 + 0.5px);
-  }
-  .neurobase-root[data-theme="balance"] .neurobase-title,
-  .neurobase-root[data-theme="dark"] .neurobase-title {
-    left: calc(50% - 260px/2 + 1px);
+  .neurocore-root[data-theme="light"] .neurocore-title,
+  .neurocore-root[data-theme="balance"] .neurocore-title,
+  .neurocore-root[data-theme="dark"] .neurocore-title {
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
 @media (max-width: 768px) {
-  .neurobase-root[data-theme="light"] .neurobase-title {
-    left: calc(50% - 240px/2 + 0.5px);
-  }
-  .neurobase-root[data-theme="balance"] .neurobase-title,
-  .neurobase-root[data-theme="dark"] .neurobase-title {
-    left: calc(50% - 240px/2 + 1px);
+  .neurocore-root[data-theme="light"] .neurocore-title,
+  .neurocore-root[data-theme="balance"] .neurocore-title,
+  .neurocore-root[data-theme="dark"] .neurocore-title {
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
 @media (max-width: 480px) {
-  .neurobase-root[data-theme="light"] .neurobase-title {
-    left: calc(50% - 200px/2 + 0.5px);
-  }
-  .neurobase-root[data-theme="balance"] .neurobase-title,
-  .neurobase-root[data-theme="dark"] .neurobase-title {
-    left: calc(50% - 200px/2 + 1px);
+  .neurocore-root[data-theme="light"] .neurocore-title,
+  .neurocore-root[data-theme="balance"] .neurocore-title,
+  .neurocore-root[data-theme="dark"] .neurocore-title {
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
 @media (max-width: 360px) {
-  .neurobase-root[data-theme="light"] .neurobase-title {
-    left: calc(50% - 180px/2 + 0.5px);
-  }
-  .neurobase-root[data-theme="balance"] .neurobase-title,
-  .neurobase-root[data-theme="dark"] .neurobase-title {
-    left: calc(50% - 180px/2 + 1px);
+  .neurocore-root[data-theme="light"] .neurocore-title,
+  .neurocore-root[data-theme="balance"] .neurocore-title,
+  .neurocore-root[data-theme="dark"] .neurocore-title {
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
@@ -279,24 +286,28 @@
 
 /* Responsive breakpoints */
 @media (max-width: 1200px) {
-  .neurobase-title {
+  .neurocore-title {
     font-size: 42px;
-    width: 260px;
-    left: calc(50% - 260px/2 + 0.5px);
+    width: auto;
+    max-width: 90vw;
+    left: 50%;
+    transform: translateX(-50%);
   }
   
   /* Ensure background scales properly */
-  .neurobase-root {
+  .neurocore-root {
     background-size: cover;
     background-position: center;
   }
 }
 
 @media (max-width: 768px) {
-  .neurobase-title {
+  .neurocore-title {
     font-size: 36px;
-    width: 240px;
-    left: calc(50% - 240px/2 + 0.5px);
+    width: auto;
+    max-width: 90vw;
+    left: 50%;
+    transform: translateX(-50%);
   }
   
   .notification-popup {
@@ -312,13 +323,15 @@
 }
 
 @media (max-width: 480px) {
-  .neurobase-title {
+  .neurocore-title {
     font-size: 28px;
-    width: 200px;
-    left: calc(50% - 200px/2 + 0.5px);
+    width: auto;
+    max-width: 90vw;
+    left: 50%;
+    transform: translateX(-50%);
   }
   
-  .neurobase-logo {
+  .neurocore-logo {
     width: clamp(60px, 6vw, 80px);
     height: clamp(60px, 6vw, 80px);
   }
@@ -329,13 +342,15 @@
 }
 
 @media (max-width: 360px) {
-  .neurobase-title {
+  .neurocore-title {
     font-size: 24px;
-    width: 180px;
-    left: calc(50% - 180px/2 + 0.5px);
+    width: auto;
+    max-width: 90vw;
+    left: 50%;
+    transform: translateX(-50%);
   }
   
-  .neurobase-logo {
+  .neurocore-logo {
     width: clamp(50px, 5vw, 60px);
     height: clamp(50px, 5vw, 60px);
   }
@@ -343,12 +358,12 @@
 
 /* Landscape orientation support */
 @media (max-height: 600px) and (orientation: landscape) {
-  .neurobase-title {
+  .neurocore-title {
     font-size: clamp(1.2rem, 3vw, 1.8rem);
     top: clamp(3%, 5vw, 5%);
   }
   
-  .neurobase-logo {
+  .neurocore-logo {
     width: clamp(60px, 6vw, 80px);
     height: clamp(60px, 6vw, 80px);
     top: clamp(10px, 2vw, 20px);
@@ -357,100 +372,95 @@
 }
 
 /* Responsive Button Positioning Classes */
-.button-archives {
+.button-neurocontrol {
   position: absolute;
-  width: clamp(150px, 15vw, 200px);
-  height: clamp(150px, 15vw, 200px);
-  top: calc(50% - clamp(400px, 40vw, 420px) + clamp(60px, 6vw, 68px) + clamp(600px, 60vw, 640px));
-  left: calc(50% - clamp(400px, 40vw, 420px) + clamp(300px, 30vw, 320px));
+  top: 70.4%;
+  left: 50.1%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
   z-index: 10;
   opacity: 1;
-  transform: rotate(0deg);
-}
-
-.button-telephone {
-  position: absolute;
-  width: clamp(150px, 15vw, 200px);
-  height: clamp(150px, 15vw, 200px);
-  top: calc(50% - clamp(400px, 40vw, 420px) + clamp(60px, 6vw, 68px));
-  left: calc(50% - clamp(400px, 40vw, 420px) + clamp(300px, 30vw, 320px));
-  z-index: 10;
-  opacity: 1;
-  transform: rotate(0deg);
-}
-
-.button-reunion {
-  position: absolute;
-  width: clamp(150px, 15vw, 200px);
-  height: clamp(150px, 15vw, 200px);
-  top: calc(50% - clamp(400px, 40vw, 420px) + clamp(60px, 6vw, 68px) + clamp(300px, 30vw, 320px));
-  left: calc(50% - clamp(400px, 40vw, 420px) + clamp(600px, 60vw, 640px));
-  z-index: 20;
-  opacity: 1;
-  transform: rotate(0deg);
-}
-
-.button-accueil {
-  position: absolute;
-  width: clamp(150px, 15vw, 200px);
-  height: clamp(150px, 15vw, 200px);
-  top: calc(50% - clamp(400px, 40vw, 420px) + clamp(60px, 6vw, 68px) + clamp(300px, 30vw, 320px));
-  left: calc(50% - clamp(400px, 40vw, 420px));
-  z-index: 20;
-  opacity: 1;
-  transform: rotate(0deg);
   will-change: transform;
   backface-visibility: hidden;
 }
 
-.button-commandes {
+
+
+.button-neurolab {
   position: absolute;
-  width: clamp(150px, 15vw, 200px);
-  height: clamp(150px, 15vw, 200px);
-  top: calc(50% - clamp(400px, 40vw, 420px) + clamp(60px, 6vw, 68px) + clamp(500px, 50vw, 540px));
-  left: calc(50% - clamp(400px, 40vw, 420px) + clamp(100px, 10vw, 100px));
+  top: 46.3%;
+  left: 72.8%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
   z-index: 20;
   opacity: 1;
-  transform: rotate(0deg);
   will-change: transform;
   backface-visibility: hidden;
 }
 
-.button-emails {
+.button-neurostat {
   position: absolute;
-  width: clamp(150px, 15vw, 200px);
-  height: clamp(150px, 15vw, 200px);
-  top: calc(50% - clamp(400px, 40vw, 420px) + clamp(60px, 6vw, 68px) + clamp(100px, 10vw, 100px));
-  left: calc(50% - clamp(400px, 40vw, 420px) + clamp(100px, 10vw, 100px));
-  z-index: 10;
-  opacity: 1;
-  transform: rotate(0deg);
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
-.button-agenda {
-  position: absolute;
-  width: clamp(150px, 15vw, 200px);
-  height: clamp(150px, 15vw, 200px);
-  top: calc(50% - clamp(400px, 40vw, 420px) + clamp(60px, 6vw, 68px) + clamp(500px, 50vw, 540px));
-  left: calc(50% - clamp(400px, 40vw, 420px) + clamp(500px, 50vw, 540px));
+  top: 46.3%;
+  left: 27.3%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
   z-index: 20;
   opacity: 1;
-  transform: rotate(0deg);
   will-change: transform;
   backface-visibility: hidden;
 }
 
-.button-colis {
+.button-neurotools {
   position: absolute;
-  width: clamp(150px, 15vw, 200px);
-  height: clamp(150px, 15vw, 200px);
-  top: calc(50% - clamp(400px, 40vw, 420px) + clamp(60px, 6vw, 68px) + clamp(100px, 10vw, 100px));
-  left: calc(50% - clamp(400px, 40vw, 420px) + clamp(500px, 50vw, 540px));
+  top: 67.8%;
+  left: 36.3%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  z-index: 20;
+  opacity: 1;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.button-neurobase {
+  position: absolute;
+  top: 39.2%;
+  left: 41.4%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
   z-index: 10;
   opacity: 1;
-  transform: rotate(0deg);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.button-neuroalert {
+  position: absolute;
+  top: 67.8%;
+  left: 63.8%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  z-index: 20;
+  opacity: 1;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.button-neuropacks {
+  position: absolute;
+  top: 39.3%;
+  left: 58.7%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  z-index: 10;
+  opacity: 1;
   will-change: transform;
   backface-visibility: hidden;
 }
@@ -464,65 +474,63 @@
 
 /* Responsive button positioning for smaller screens */
 @media (max-width: 768px) {
-  .button-archives,
-  .button-telephone,
-  .button-reunion,
-  .button-accueil,
-  .button-commandes,
-  .button-emails,
-  .button-agenda,
-  .button-colis {
+  .button-neurocontrol,
+  .button-neurolab,
+  .button-neurostat,
+  .button-neurotools,
+  .button-neurobase,
+  .button-neuroalert,
+  .button-neuropacks {
     width: clamp(120px, 12vw, 150px);
     height: clamp(120px, 12vw, 150px);
   }
 }
 
 @media (max-width: 480px) {
-  .button-archives,
-  .button-telephone,
-  .button-reunion,
-  .button-accueil,
-  .button-commandes,
-  .button-emails,
-  .button-agenda,
-  .button-colis {
+  .button-neurocontrol,
+  .button-neurolab,
+  .button-neurostat,
+  .button-neurotools,
+  .button-neurobase,
+  .button-neuroalert,
+  .button-neuropacks {
     width: clamp(100px, 10vw, 120px);
     height: clamp(100px, 10vw, 120px);
   }
 }
 
 @media (max-width: 360px) {
-  .button-archives,
-  .button-telephone,
-  .button-reunion,
-  .button-accueil,
-  .button-commandes,
-  .button-emails,
-  .button-agenda,
-  .button-colis {
+  .button-neurocontrol,
+  .button-neurolab,
+  .button-neurostat,
+  .button-neurotools,
+  .button-neurobase,
+  .button-neuroalert,
+  .button-neuropacks {
     width: clamp(80px, 8vw, 100px);
     height: clamp(80px, 8vw, 100px);
   }
 }
 
 /* General button container optimizations */
-.button-archives,
-.button-telephone,
-.button-reunion,
-.button-accueil,
-.button-commandes,
-.button-emails,
-.button-agenda,
-.button-colis {
+.button-neurocontrol,
+.button-neurolab,
+.button-neurostat,
+.button-neurotools,
+.button-neurobase,
+.button-neuroalert,
+.button-neuropacks {
   will-change: transform;
   backface-visibility: hidden;
   transform-style: preserve-3d;
   perspective: 1000px;
+  /* Ensure consistent zoom behavior */
+  transform-origin: center center;
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  .neurobase-title {
+  .neurocore-title {
     color: #000000;
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
   }

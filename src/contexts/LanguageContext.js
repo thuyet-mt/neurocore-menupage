@@ -12,36 +12,33 @@ export const useLanguage = () => {
 
 // Fallback English language data built-in
 const fallbackEnglishData = {
-  "neurobase_window": {
-    "title": "Neurobase",
-    "telephone": "Telephone",
-    "reunions": "Reunions",
-    "archives": "Archives",
-    "emails": "Emails",
-    "agenda": "Agenda",
-    "colis": "Packages",
-    "commandes": "Orders",
-    "accueil": "Home",
+  "neurocore_main_window": {
+    "title": "WELCOME TO THE NEUROCORE UNIVERSE",
+    "neurostat": "NEUROSTAT",
+    "neurobase": "NEUROBASE",
+    "neuropacks": "NEUROPACKS",
+    "neurolab": "NEUROLAB",
+    "neurotools": "NEUROTOOLS",
+    "neurocontrol": "NEURO CONTROL",
+    "neuroalert": "NEURO ALERT",
     "menu": "Menu",
     "home": "Home",
     "back": "Back",
     "adjust_cursor_size": "Adjust cursor size",
-    "archives_opened": "Archives opened successfully! 📁",
-    "archives_failed": "Could not open Archives",
-    "telephone_opened": "Telephone system opened! 📞",
-    "telephone_failed": "Could not open telephone system",
-    "reunions_opened": "Reunions & Meetings opened! 👥",
-    "reunions_failed": "Could not open Reunions & Meetings",
-    "accueil_opened": "Home opened! 🏠",
-    "accueil_failed": "Could not open Home",
-    "commandes_opened": "Orders opened! 📋",
-    "commandes_failed": "Could not open Orders",
-    "emails_opened": "Emails opened! 📧",
-    "emails_failed": "Could not open Emails",
-    "agenda_opened": "Agenda opened! 📅",
-    "agenda_failed": "Could not open Agenda",
-    "colis_opened": "Packages opened! 📦",
-    "colis_failed": "Could not open Packages",
+    "neurostat_opened": "Neurostat opened successfully! 📁",
+    "neurostat_failed": "Could not open Neurostat",
+    "neurobase_opened": "Neurobase opened successfully! 📁",
+    "neurobase_failed": "Could not open Neurobase",
+    "neuropacks_opened": "Neuropacks opened successfully! �",
+    "neuropacks_failed": "Could not open Neuropacks",
+    "neurolab_opened": "Neurolab opened successfully! �",
+    "neurolab_failed": "Could not open Neurolab",
+    "neurotools_opened": "Neurotools opened successfully! �",
+    "neurotools_failed": "Could not open Neurotools",
+    "neurocontrol_opened": "Neurocontrol opened successfully! 📁",
+    "neurocontrol_failed": "Could not open Neurocontrol",
+    "neuroalert_opened": "Neuroalert opened successfully! 📁",
+    "neuroalert_failed": "Could not open Neuroalert",
     "navigating_back": "Navigating back... ⬅️",
     "back_failed": "Could not go back",
     "progress_updated": "Progress updated: {value}% 📊",
@@ -129,7 +126,7 @@ export const LanguageProvider = ({ children }) => {
   }, []);
 
   // Helper function to get text from language data
-  const getText = (key, section = 'neurobase_window') => {
+  const getText = (key, section = 'neurocore_main_window') => {
     if (!languageData || !languageData[section]) {
       console.warn(`⚠️ Language data not available for section: ${section}`);
       return key; // Return key as fallback
@@ -147,7 +144,7 @@ export const LanguageProvider = ({ children }) => {
   };
 
   // Helper function to get text with parameters
-  const getTextWithParams = (key, params = {}, section = 'neurobase_window') => {
+  const getTextWithParams = (key, params = {}, section = 'neurocore_main_window') => {
     let text = getText(key, section);
     
     // Replace parameters in text
