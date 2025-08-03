@@ -17,7 +17,7 @@ import ProgressBar from "./ProgressBar";
 import { Canvas } from '@react-three/fiber';
 import Logo3DModel from "./Logo3DModel";
 
-import TelephoneIcon from "../assets/telephone_icon.svg";
+
 import NeurostatIcon from "../assets/neurostat_icon.svg"
 import NeurolabIcon from "../assets/neurolab_icon.svg"
 import NeurotoolsIcon from "../assets/neurotools_icon.svg"
@@ -145,16 +145,7 @@ export default function Neurocore() {
     [getText]
   );
 
-  const handleTelephoneButtonClick = useCallback(
-    debounce(() => {
-      callSlotWithNotification(
-        () => webChannelService.openTelephone(),
-        getText("telephone_opened"),
-        getText("telephone_failed")
-      );
-    }, 100),
-    [getText]
-  );
+
 
   const handleNeurolabButtonClick = useCallback(
     debounce(() => {
@@ -440,30 +431,6 @@ export default function Neurocore() {
         />
       </div>
 
-      {/* Telephone Button */}
-      <div className="button-telephone">
-        <GoldenButton
-          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
-          onClick={handleTelephoneButtonClick}
-          tooltip="Telephone Button - Click me! 📞"
-          tooltipPosition="top"
-          size="100%"
-          icon={
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '10px'
-            }}>
-              <img src={TelephoneIcon} alt="logo"/>
-              <div style={getResponsiveTextStyle(23)}>
-                {getText("telephone")}
-              </div>
-            </div>
-          }
-        />
-      </div>
 
       {/* Neurolab Button */}
       <div className="button-neurolab">
@@ -532,7 +499,22 @@ export default function Neurocore() {
               gap: '10px'
             }}>
               <img src={NeurotoolsIcon} alt="logo"/>
-              <div style={getResponsiveTextStyle(23)}>
+              <div style={{
+                width: '124px',
+                height: '25px',
+                fontFamily: 'Open Sans',
+                fontStyle: 'normal',
+                fontWeight: '700',
+                fontSize: '18px',
+                lineHeight: '25px',
+                display: 'flex',
+                alignItems: 'center',
+                textAlign: 'center',
+                color: '#4E3117',
+                flex: 'none',
+                order: 1,
+                flexGrow: 0
+              }}>
                 {getText("neurotools")}
               </div>
             </div>
