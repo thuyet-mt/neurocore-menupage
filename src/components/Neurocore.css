@@ -525,8 +525,6 @@
   backface-visibility: hidden;
   transform-style: preserve-3d;
   perspective: 1000px;
-  /* Ensure consistent zoom behavior */
-  transform-origin: center center;
 }
 
 .button-neurocontrol,

@@ -25,6 +25,8 @@ import NeurobaseIcon from "../assets/neurobase_icon.svg"
 import NeuropacksIcon from "../assets/neuropacks_icon.svg"
 import NeurocontrolIcon from "../assets/neurocontrol_icon.svg"
 import NeuroalertIcon from "../assets/neuroalert_icon.svg"
+import BackButton from "./BackButton";
+import BackIcon from "../assets/back_icon.svg";
 
 
 
@@ -382,7 +384,7 @@ export default function Neurocore() {
       <MenuButton onClick={handleMenuButtonClick} />
       {/* Back Button */}
       {/* <BackButton tooltip="Quay lại" onClick={handleBackButtonClick} /> */}
-      {/* <BackButton 
+      <BackButton 
         theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'balance'}
         onClick={handleBackButtonClick}
         tooltip={getText("back")}
@@ -404,7 +406,7 @@ export default function Neurocore() {
             </div>          
           </div>
         }
-      /> */}
+      />
       
       {/* Neurocontrol Button với vị trí tương đối so với Menu Container Frame */}
       <div className="button-neurocontrol">
