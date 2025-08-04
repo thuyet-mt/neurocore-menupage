@@ -103,59 +103,33 @@ class WebChannelService {
 
   // === Các method gọi slot cụ thể ===
 
-  // Menu Button Actions
-  async openMenu() {
-    return this.callSlot('openMenu');
+  // Neuro Core Menu Slots
+  async openNeuroControl() {
+    return this.callSlot('openNeuroControl');
   }
 
-  async openProfile() {
-    return this.callSlot('openProfile');
+  async openNeuroLab() {
+    return this.callSlot('openNeuroLab');
   }
 
-  async openSettings() {
-    return this.callSlot('openSettings');
+  async openNeuroStat() {
+    return this.callSlot('openNeuroStat');
   }
 
-  // Navigation Actions
-  async goBack() {
-    return this.callSlot('goBack');
+  async openNeuroTools() {
+    return this.callSlot('openNeuroTools');
   }
 
-  async navigateToHome() {
-    return this.callSlot('navigateToHome');
+  async openNeuroBase() {
+    return this.callSlot('openNeuroBase');
   }
 
-  // Feature Actions
-  async openArchives() {
-    return this.callSlot('openArchives');
+  async openNeuroAlert() {
+    return this.callSlot('openNeuroAlert');
   }
 
-  async openTelephone() {
-    return this.callSlot('openTelephone');
-  }
-
-  async openReunions() {
-    return this.callSlot('openReunions');
-  }
-
-  async openAccueil() {
-    return this.callSlot('openAccueil');
-  }
-
-  async openCommandes() {
-    return this.callSlot('openCommandes');
-  }
-
-  async openEmails() {
-    return this.callSlot('openEmails');
-  }
-
-  async openAgenda() {
-    return this.callSlot('openAgenda');
-  }
-
-  async openColis() {
-    return this.callSlot('openColis');
+  async openNeuroPacks() {
+    return this.callSlot('openNeuroPacks');
   }
 
   // Theme Actions
@@ -174,10 +148,6 @@ class WebChannelService {
   }
 
   // System Actions
-  async logout() {
-    return this.callSlot('logout');
-  }
-
   async shutdown() {
     return this.callSlot('shutdown');
   }
@@ -194,6 +164,15 @@ class WebChannelService {
   // === Test Methods ===
   async testCloseWindow() {
     return this.callSlot('testCloseWindow');
+  }
+
+  // === Navigation Methods ===
+  async openNeurobase() {
+    return this.callSlot('openNeuroBase');
+  }
+
+  async on_open_neurobase() {
+    return this.callSlot('openNeuroBase');
   }
 }
 

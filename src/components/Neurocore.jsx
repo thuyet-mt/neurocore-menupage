@@ -25,8 +25,8 @@ import NeurobaseIcon from "../assets/neurobase_icon.svg"
 import NeuropacksIcon from "../assets/neuropacks_icon.svg"
 import NeurocontrolIcon from "../assets/neurocontrol_icon.svg"
 import NeuroalertIcon from "../assets/neuroalert_icon.svg"
-import BackButton from "./BackButton";
-import BackIcon from "../assets/back_icon.svg";
+
+
 
 // Debounce utility
 const debounce = (func, wait) => {
@@ -182,7 +182,7 @@ export default function Neurocore() {
 
   const handleNeurobaseButtonClick = () => {
     callSlotWithNotification(
-      () => webChannelService.openNeurobase(),
+      () => webChannelService.on_open_neurobase(),
       getText("neurobase_opened"),
       getText("neurobase_failed")
     );
@@ -227,7 +227,7 @@ export default function Neurocore() {
   
   const handleMenuButtonClick = () => {
     callSlotWithNotification(
-      () => webChannelService.openMenu(),
+      () => webChannelService.shutdown(),
       getText("menu_opened"),
       getText("menu_failed")
     );
