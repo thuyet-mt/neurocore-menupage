@@ -2,16 +2,13 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { useTheme } from '../contexts/ThemeContext';
-import { useCursor3D } from '../hooks/useCursor3D';
 
 const Cursor3D = () => {
   const mountRef = useRef(null);
   const { currentMode } = useTheme();
-  const { isEnabled, error } = useCursor3D();
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [debugInfo, setDebugInfo] = useState('');
   
   // Scene, camera, renderer refs
   const sceneRef = useRef(null);
@@ -36,14 +33,11 @@ const Cursor3D = () => {
     }
   };
 
-  // Don't render if cursor 3D is disabled or has error
-  if (!isEnabled || error) {
-    return null;
-  }
+
 
   // Initialize Three.js scene
   useEffect(() => {
-    if (!mountRef.current || !isEnabled) return;
+    if (!mountRef.current) return;
 
     console.log('🎯 Initializing 3D cursor...');
 
@@ -98,16 +92,13 @@ const Cursor3D = () => {
         }
 
         setIsLoaded(true);
-        setDebugInfo('Model loaded');
       },
       (progress) => {
         const percent = (progress.loaded / progress.total * 100);
         console.log('🎯 Loading cursor model:', percent + '%');
-        setDebugInfo(`Loading: ${percent.toFixed(1)}%`);
       },
       (error) => {
         console.error('❌ Error loading cursor model:', error);
-        setDebugInfo('Load error');
       }
     );
 
@@ -133,11 +124,10 @@ const Cursor3D = () => {
       }
       renderer.dispose();
     };
-  }, [currentMode, isEnabled]);
+  }, [currentMode]);
 
   // Handle mouse movement
   useEffect(() => {
-    if (!isEnabled) return;
 
     const handleMouseMove = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -166,11 +156,10 @@ const Cursor3D = () => {
       document.removeEventListener('mouseenter', handleMouseEnter);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [isLoaded, isEnabled]);
+  }, [isLoaded]);
 
   // Handle click animation
   useEffect(() => {
-    if (!isEnabled) return;
 
     const handleClick = () => {
       if (modelRef.current) {
@@ -188,7 +177,7 @@ const Cursor3D = () => {
 
     document.addEventListener('click', handleClick);
     return () => document.removeEventListener('click', handleClick);
-  }, [isLoaded, isEnabled]);
+  }, [isLoaded]);
 
   return (
     <>
@@ -206,22 +195,6 @@ const Cursor3D = () => {
           transition: 'none'
         }}
       />
-      {/* Debug info */}
-      {debugInfo && (
-        <div style={{
-          position: 'fixed',
-          top: '50px',
-          right: '10px',
-          background: '#333',
-          color: 'white',
-          padding: '4px 8px',
-          borderRadius: '4px',
-          fontSize: '10px',
-          zIndex: 10001
-        }}>
-          {debugInfo}
-        </div>
-      )}
     </>
   );
 };

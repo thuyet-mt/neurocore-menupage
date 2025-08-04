@@ -4,7 +4,6 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import ErrorBoundary from "./services/ErrorBoundary";
 import NotificationSystem from "./components/NotificationSystem";
 import Cursor3D from "./components/Cursor3D";
-import Cursor3DController from "./components/Cursor3DController";
 
 function App() {
   return (
@@ -12,7 +11,6 @@ function App() {
       <LanguageProvider>
         <ThemeProvider>
           <Cursor3D />
-          <Cursor3DController />
           <NotificationSystem />
           <Neurocore />
         </ThemeProvider>
