@@ -1,12 +1,10 @@
 .mode-btn-root {
   position: relative;
-  width: 369px;
-  height: 80px;
-  right: 64000px;
-  top: 880px;
   display: flex;
   align-items: center;
-  z-index: 10;
+  justify-content: center;
+  cursor: none !important;
+  transition: all 0.3s ease;
 }
 
 .mode-btn-frame {
@@ -17,7 +15,7 @@
   gap: 16px;
   width: 369px;
   height: 80px;
-  cursor: pointer;
+  cursor: none !important;
   position: relative;
 }
 

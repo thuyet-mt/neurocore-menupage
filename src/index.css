@@ -28,6 +28,18 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  /* Hide default cursor globally for 3D cursor */
+  cursor: none !important;
+}
+
+/* Hide default cursor for ALL elements to make 3D cursor truly global */
+* {
+  cursor: none !important;
+}
+
+/* Specific elements that might need different cursor behavior */
+button, a, input, textarea, select, div, span, p, h1, h2, h3, h4, h5, h6 {
+  cursor: none !important;
 }
 
 h1 {
@@ -43,7 +55,7 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
-  cursor: pointer;
+  cursor: none !important;
   transition: border-color 0.25s;
 }
 button:hover {

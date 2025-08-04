@@ -470,6 +470,7 @@
   bottom: clamp(40px, 4vw, 64px);
   right: clamp(40px, 4vw, 64px);
   z-index: 10;
+  cursor: none !important;
 }
 
 /* Responsive button positioning for smaller screens */
@@ -526,6 +527,16 @@
   perspective: 1000px;
   /* Ensure consistent zoom behavior */
   transform-origin: center center;
+}
+
+.button-neurocontrol,
+.button-neurolab,
+.button-neurostat,
+.button-neurotools,
+.button-neurobase,
+.button-neuroalert,
+.button-neuropacks {
+  cursor: none !important;
 }
 
 /* High contrast mode support */
