@@ -65,7 +65,7 @@ const ButtonFactory = ({
   return (
     <div className={`button-${config.id} ${className}`}>
       <GoldenButton
-        theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
+        theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'balance'}
         onClick={onClick}
         tooltip={`${config.title} Button - Click me!`}
         tooltipPosition={tooltipPosition}

@@ -23,9 +23,9 @@ export const getThemeFromMode = (currentMode) => {
     case 'light':
       return 'light';
     case 'balance':
-      return 'gold';
+      return 'balance';
     default:
-      return 'gold';
+      return 'balance';
   }
 };
 

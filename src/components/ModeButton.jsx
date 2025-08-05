@@ -59,7 +59,7 @@ const themeStyles = {
       border: '1px solid #555',
     },
   },
-  balance: {
+      balance: {
     outerGlow: {
       background: `linear-gradient(180deg, rgba(102, 102, 102, 0.2) 0%, rgba(102, 102, 102, 0) 32.69%), 
                    linear-gradient(180deg, rgba(102, 102, 102, 0) 50%, rgba(102, 102, 102, 0.4) 100%), 

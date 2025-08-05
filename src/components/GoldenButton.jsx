@@ -58,7 +58,7 @@ const themeStyles = {
       border: '1px solid #555',
     },
   },
-  gold: {
+  balance: {
     outerGlow: {
       background: `linear-gradient(180deg, rgba(102, 102, 102, 0.2) 0%, rgba(102, 102, 102, 0) 32.69%), 
                    linear-gradient(180deg, rgba(102, 102, 102, 0) 50%, rgba(102, 102, 102, 0.4) 100%), 
@@ -89,7 +89,7 @@ const themeStyles = {
 };
 
 const GoldenButton = ({ 
-  theme = 'gold', 
+  theme = 'balance', 
   icon = null, 
   size = 300,
   onClick = () => {},
@@ -98,7 +98,7 @@ const GoldenButton = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   
-  const styles = themeStyles[theme] || themeStyles.gold;
+  const styles = themeStyles[theme] || themeStyles.balance;
 
   // Handle responsive size
   const isResponsiveSize = typeof size === 'string' && size.includes('%');

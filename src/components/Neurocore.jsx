@@ -410,7 +410,7 @@ export default function Neurocore({ progressValue = 35, onProgressChange = () =>
       {/* Neurocontrol Button với vị trí tương đối so với Menu Container Frame */}
       <div className="button-neurocontrol">
         <GoldenButton 
-          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
+          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'balance'}
           onClick={handleNeurocontrolButtonClick}
           tooltip="Neurocontrol Button - Click me! ✨"
           tooltipPosition="top"
@@ -436,7 +436,7 @@ export default function Neurocore({ progressValue = 35, onProgressChange = () =>
       {/* Neurolab Button */}
       <div className="button-neurolab">
         <GoldenButton
-          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
+          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'balance'}
           onClick={handleNeurolabButtonClick}
           tooltip="Neurolab Button - Click me! 👥"
           tooltipPosition="top"
@@ -461,7 +461,7 @@ export default function Neurocore({ progressValue = 35, onProgressChange = () =>
       {/* Neurostat Button */}
       <div className="button-neurostat">
         <GoldenButton
-          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
+          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'balance'}
           onClick={handleNeurostatButtonClick}
           tooltip="Neurostat Button - Click me! 🏠"
           tooltipPosition="top"
@@ -486,7 +486,7 @@ export default function Neurocore({ progressValue = 35, onProgressChange = () =>
       {/* Commandes Button */}
       <div className="button-neurotools">
         <GoldenButton
-          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
+          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'balance'}
           onClick={handleCommandesButtonClick}
           tooltip="Neurotools Button - Click me! 📋"
           tooltipPosition="top"
@@ -526,7 +526,7 @@ export default function Neurocore({ progressValue = 35, onProgressChange = () =>
       {/* Neurobase Button */}
       <div className="button-neurobase">
         <GoldenButton
-          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
+          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'balance'}
           onClick={handleNeurobaseButtonClick}
           tooltip="Neurobase Button - Click me! 📧"
           tooltipPosition="top"
@@ -551,7 +551,7 @@ export default function Neurocore({ progressValue = 35, onProgressChange = () =>
       {/* Neuroalert Button */}
       <div className="button-neuroalert">
         <GoldenButton
-          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
+          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'balance'}
           onClick={handleNeuroalertButtonClick}
           tooltip="Neuroalert Button - Click me! 📅"
           tooltipPosition="top"
@@ -576,7 +576,7 @@ export default function Neurocore({ progressValue = 35, onProgressChange = () =>
       {/* Neuropacks Button */}
       <div className="button-neuropacks">
         <GoldenButton
-          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'gold'}
+          theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'balance'}
           onClick={handleNeuropacksButtonClick}
           tooltip="Neuropacks Button - Click me! 📦"
           tooltipPosition="top"
