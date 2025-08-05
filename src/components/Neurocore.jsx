@@ -43,12 +43,11 @@ const debounce = (func, wait) => {
   };
 };
 
-export default function Neurocore() {
+export default function Neurocore({ progressValue = 35, onProgressChange = () => {} }) {
   const { currentMode } = useTheme();
   const { getText, getTextWithParams, loading, error } = useLanguage();
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
-  const [progressValue, setProgressValue] = useState(35); // Initial value at 35%
   const [isWebChannelReady, setIsWebChannelReady] = useState(false);
   const [backgroundScale, setBackgroundScale] = useState(0.7);
   const [isZooming, setIsZooming] = useState(false);
@@ -215,7 +214,7 @@ export default function Neurocore() {
   };
 
   const handleProgressChange = (newValue) => {
-    setProgressValue(newValue);
+    onProgressChange(newValue);
     
     // Gọi slot để cập nhật progress
     callSlotWithNotification(

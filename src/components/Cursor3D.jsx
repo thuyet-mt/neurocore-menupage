@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { useTheme } from '../contexts/ThemeContext';
 
-const Cursor3D = () => {
+const Cursor3D = ({ size = 150 }) => {
   const mountRef = useRef(null);
   const { currentMode } = useTheme();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -33,13 +33,24 @@ const Cursor3D = () => {
     }
   };
 
-
+  // Calculate base scale based on size (5x larger range)
+  const getBaseScale = () => {
+    // Map size from 250-1000 to scale 0.4-1.2
+    const minSize = 250;
+    const maxSize = 1000;
+    const minScale = 0.4;
+    const maxScale = 1.2;
+    
+    const normalizedSize = Math.max(minSize, Math.min(maxSize, size));
+    const scale = minScale + ((normalizedSize - minSize) / (maxSize - minSize)) * (maxScale - minScale);
+    return scale;
+  };
 
   // Initialize Three.js scene
   useEffect(() => {
     if (!mountRef.current) return;
 
-    console.log('🎯 Initializing 3D cursor...');
+    console.log('🎯 Initializing 3D cursor with size:', size);
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -56,7 +67,7 @@ const Cursor3D = () => {
       antialias: true,
       powerPreference: "high-performance"
     });
-    renderer.setSize(150, 150); // Increased size for better visibility
+    renderer.setSize(size, size); // Use dynamic size
     renderer.setClearColor(0x000000, 0);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     rendererRef.current = renderer;
@@ -75,20 +86,22 @@ const Cursor3D = () => {
         console.log('✅ Cursor model loaded successfully');
         const model = gltf.scene;
         
-        // Scale and position the model
-        model.scale.set(0.8, 0.8, 0.8); // Increased scale
+        // Scale and position the model based on size
+        const baseScale = getBaseScale();
+        model.scale.set(baseScale, baseScale, baseScale);
         model.position.set(0, 0, 0);
         
         // Add to scene
         scene.add(model);
         modelRef.current = model;
 
-        // Setup animations if available
+        // Setup animations if available (but don't auto-play)
         if (gltf.animations && gltf.animations.length > 0) {
           const mixer = new THREE.AnimationMixer(model);
           const action = mixer.clipAction(gltf.animations[0]);
-          action.play();
+          // Store the action for later use
           mixerRef.current = mixer;
+          mixerRef.current._action = action;
         }
 
         setIsLoaded(true);
@@ -124,7 +137,14 @@ const Cursor3D = () => {
       }
       renderer.dispose();
     };
-  }, [currentMode]);
+  }, [currentMode, size]);
+
+  // Update renderer size when size prop changes
+  useEffect(() => {
+    if (rendererRef.current) {
+      rendererRef.current.setSize(size, size);
+    }
+  }, [size]);
 
   // Handle mouse movement
   useEffect(() => {
@@ -136,14 +156,16 @@ const Cursor3D = () => {
     const handleMouseEnter = () => {
       setIsHovering(true);
       if (modelRef.current) {
-        modelRef.current.scale.set(1.0, 1.0, 1.0);
+        const baseScale = getBaseScale();
+        modelRef.current.scale.set(baseScale * 1.25, baseScale * 1.25, baseScale * 1.25);
       }
     };
 
     const handleMouseLeave = () => {
       setIsHovering(false);
       if (modelRef.current) {
-        modelRef.current.scale.set(0.8, 0.8, 0.8);
+        const baseScale = getBaseScale();
+        modelRef.current.scale.set(baseScale, baseScale, baseScale);
       }
     };
 
@@ -156,28 +178,46 @@ const Cursor3D = () => {
       document.removeEventListener('mouseenter', handleMouseEnter);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [isLoaded]);
+  }, [isLoaded, size]);
 
   // Handle click animation
   useEffect(() => {
 
     const handleClick = () => {
-      if (modelRef.current) {
+      console.log('🎯 Click detected!');
+      if (modelRef.current && mixerRef.current && mixerRef.current._action) {
+        console.log('🎯 Starting animation...');
+        // Start animation on click
+        const action = mixerRef.current._action;
+        
+        // Set animation to play once and stop
+        action.setLoop(THREE.LoopOnce);
+        action.clampWhenFinished = true;
+        action.reset();
+        action.play();
+        
         // Quick scale animation for click feedback
+        const baseScale = getBaseScale();
         const originalScale = modelRef.current.scale.clone();
-        modelRef.current.scale.set(0.6, 0.6, 0.6);
+        modelRef.current.scale.set(baseScale * 0.75, baseScale * 0.75, baseScale * 0.75);
         
         setTimeout(() => {
           if (modelRef.current) {
             modelRef.current.scale.copy(originalScale);
           }
         }, 100);
+      } else {
+        console.log('🎯 Animation not available:', {
+          model: !!modelRef.current,
+          mixer: !!mixerRef.current,
+          action: !!(mixerRef.current && mixerRef.current._action)
+        });
       }
     };
 
     document.addEventListener('click', handleClick);
     return () => document.removeEventListener('click', handleClick);
-  }, [isLoaded]);
+  }, [isLoaded, size]);
 
   return (
     <>
@@ -187,8 +227,8 @@ const Cursor3D = () => {
           position: 'fixed',
           top: mousePosition.y,
           left: mousePosition.x,
-          width: '150px',
-          height: '150px',
+          width: `${size}px`,
+          height: `${size}px`,
           pointerEvents: 'none',
           zIndex: 9999,
           transform: 'translate(-50%, -50%)',
