@@ -9,6 +9,15 @@
   align-items: center;
   justify-content: center;
   z-index: 50;
+  transition: all 0.3s ease;
+  border-radius: clamp(8px, 1.5vw, 12px);
+  padding: clamp(4px, 0.5vw, 6px);
+}
+
+.progress-bar-container:hover {
+  background: rgba(245, 209, 128, 0.05);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(245, 209, 128, 0.1);
 }
 
 /* Text bên trên Progress Bar */
@@ -34,6 +43,13 @@
   flex-grow: 0;
   
   margin-bottom: 0px;
+  transition: all 0.3s ease;
+}
+
+.progress-bar-container:hover .progress-text {
+  color: #FFF8E1;
+  text-shadow: 0 1px 2px rgba(245, 209, 128, 0.3);
+  transform: translateY(-1px);
 }
 
 .progress-bar {
@@ -46,6 +62,15 @@
   border-radius: clamp(6px, 1vw, 8px);
   cursor: pointer;
   overflow: visible;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+              0 2px 4px rgba(245, 209, 128, 0.3);
+  background: #E5C789;
 }
 
 .progress-fill {
@@ -55,7 +80,12 @@
   height: 100%;
   background: linear-gradient(90deg, #F5D180 0%, #C39E4A 50%, #866B2D 100%);
   border-radius: clamp(6px, 1vw, 8px);
-  transition: width 0.1s ease;
+  transition: width 0.1s ease, all 0.3s ease;
+}
+
+.progress-bar:hover .progress-fill {
+  background: linear-gradient(90deg, #FFE5A0 0%, #D4B15A 50%, #9A7A3D 100%);
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.3);
 }
 
 .progress-thumb {
@@ -133,7 +163,21 @@
   box-shadow: inset 8px 8px 4.5px -9px #FFFFFF, 
               inset -6px -6px 3px -7px #B3B3B3, 
               inset 1px 1px 0.5px -1px #B3B3B3, 
-              inset 0px 0px 15px rgba(242, 242, 242, 0.7);
+              inset 0px 0px 15px rgba(242, 242, 242, 0.7),
+              0 4px 12px rgba(245, 209, 128, 0.4);
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
+
+.progress-thumb:hover .thumb-middle-circle {
+  background: linear-gradient(289.25deg, #FFE5A0 9.32%, #D4B15A 26.97%, #9A7A3D 76.55%, #4D2B1B 91.09%);
+  transition: all 0.3s ease;
+}
+
+.progress-thumb:hover .thumb-core-circle {
+  background: linear-gradient(209.93deg, #E5C789 10.11%, #C4A349 22.51%, #B38827 78.45%, #9A7413 93.23%);
+  box-shadow: inset 0px 14px 21px rgba(255,255,255,0.8);
+  transition: all 0.3s ease;
 }
 
 .progress-bar:focus {

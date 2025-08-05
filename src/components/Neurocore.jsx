@@ -25,8 +25,7 @@ import NeurobaseIcon from "../assets/neurobase_icon.svg"
 import NeuropacksIcon from "../assets/neuropacks_icon.svg"
 import NeurocontrolIcon from "../assets/neurocontrol_icon.svg"
 import NeuroalertIcon from "../assets/neuroalert_icon.svg"
-import BackButton from "./BackButton";
-import BackIcon from "../assets/back_icon.svg";
+// BackButton and BackIcon imports removed - not needed in neurocore
 
 
 
@@ -205,13 +204,7 @@ export default function Neurocore({ progressValue = 35, onProgressChange = () =>
     );
   };
 
-  const handleBackButtonClick = () => {
-    callSlotWithNotification(
-      () => webChannelService.goBack(),
-      getText("navigating_back"),
-      getText("back_failed")
-    );
-  };
+  // handleBackButtonClick removed - not needed in neurocore
 
   const handleProgressChange = (newValue) => {
     onProgressChange(newValue);
@@ -381,31 +374,7 @@ export default function Neurocore({ progressValue = 35, onProgressChange = () =>
       <h1 className="neurocore-title">{getText("title")}</h1>
       {/* Menu Button ở góc trên bên phải */}
       <MenuButton onClick={handleMenuButtonClick} />
-      {/* Back Button */}
-      {/* <BackButton tooltip="Quay lại" onClick={handleBackButtonClick} /> */}
-      <BackButton 
-        theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'balance'}
-        onClick={handleBackButtonClick}
-        tooltip={getText("back")}
-        icon={
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px'
-          }}>
-            <img src={BackIcon} alt="logo"/>
-            <div style={{
-              ...getResponsiveTextStyle(23),
-              lineHeight: '1',
-              display: 'flex',
-              alignItems: 'center'
-            }}>
-              {getText("back")}
-            </div>          
-          </div>
-        }
-      />
+      {/* Back Button removed - not needed in neurocore */}
       
       {/* Neurocontrol Button với vị trí tương đối so với Menu Container Frame */}
       <div className="button-neurocontrol">
