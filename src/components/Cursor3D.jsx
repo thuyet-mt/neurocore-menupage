@@ -4,6 +4,12 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { useTheme } from '../contexts/ThemeContext';
 
 const Cursor3D = ({ size = 150, onOffsetChange }) => {
+  // Add render counter for tracking re-renders
+  const renderCountRef = useRef(0);
+  renderCountRef.current += 1;
+  
+  console.log(`🔄 Cursor3D re-render #${renderCountRef.current} - Size: ${size}, Theme: ${useTheme().currentMode}`);
+  
   const mountRef = useRef(null);
   const { currentMode } = useTheme();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -20,6 +26,7 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
   const clockRef = useRef(new THREE.Clock());
   const animationFrameRef = useRef(null);
   const loaderRef = useRef(null);
+  const isInitializedRef = useRef(false);
 
   // Load cursor offset from localStorage or use defaults
   const [cursorOffset, setCursorOffset] = useState(() => {
@@ -42,19 +49,25 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     const maxScale = 1.2;
     
     const normalizedSize = Math.max(minSize, Math.min(maxSize, size));
-    return minScale + ((normalizedSize - minSize) / (maxSize - minSize)) * (maxScale - minScale);
+    const scale = minScale + ((normalizedSize - minSize) / (maxSize - minSize)) * (maxScale - minScale);
+    console.log(`📏 Base scale calculated: ${scale} (size: ${size})`);
+    return scale;
   }, [size]);
 
   // Get model path based on theme
   const getModelPath = useCallback((theme) => {
-    switch (theme) {
-      case 'dark':
-        return '/neuro_core/config/models_3d/hand_robot_dark_v2.glb';
-      case 'balance':
-        return '/neuro_core/config/models_3d/hand_robot_gold_v2.glb';
-      case 'light':
-        return '/neuro_core/config/models_3d/hand_robot_light_v2.glb';
-    }
+    const path = (() => {
+      switch (theme) {
+        case 'dark':
+          return '/neuro_core/config/models_3d/hand_robot_dark_v2.glb';
+        case 'balance':
+          return '/neuro_core/config/models_3d/hand_robot_gold_v2.glb';
+        case 'light':
+          return '/neuro_core/config/models_3d/hand_robot_light_v2.glb';
+      }
+    })();
+    console.log(`🎨 Model path for theme ${theme}: ${path}`);
+    return path;
   }, []);
 
   // Calculate cursor offset to align fingertip with mouse position
@@ -68,6 +81,7 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
 
   // Handle offset changes from calibration
   const handleOffsetChange = useCallback((newOffset) => {
+    console.log(`🎯 Cursor offset changed:`, newOffset);
     setCursorOffset(newOffset);
     localStorage.setItem('cursorOffset', JSON.stringify(newOffset));
     if (onOffsetChange) {
@@ -77,9 +91,13 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
 
   // Initialize Three.js scene
   useEffect(() => {
-    if (!mountRef.current) return;
-
-    console.log('🎯 Initializing 3D cursor with size:', size);
+    if (!mountRef.current || isInitializedRef.current) {
+      console.log(`🚫 Scene initialization skipped - mountRef: ${!!mountRef.current}, isInitialized: ${isInitializedRef.current}`);
+      return;
+    }
+    
+    isInitializedRef.current = true;
+    console.log('🎯 Initializing 3D cursor scene with size:', size);
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -124,8 +142,11 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     };
     animate();
 
+    console.log('✅ Scene initialization complete');
+
     // Cleanup function
     return () => {
+      console.log('🧹 Cleaning up scene');
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -136,14 +157,18 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     };
   }, []); // Only run once on mount
 
-  // Load model when theme changes
+  // Load model when theme changes - OPTIMIZED
   useEffect(() => {
-    if (!sceneRef.current || !loaderRef.current) return;
+    if (!sceneRef.current || !loaderRef.current) {
+      console.log(`🚫 Model loading skipped - sceneRef: ${!!sceneRef.current}, loaderRef: ${!!loaderRef.current}`);
+      return;
+    }
 
     console.log('🎯 Loading cursor model for theme:', currentMode);
     
     // Clear existing model
     if (modelRef.current) {
+      console.log('🗑️ Removing existing model');
       sceneRef.current.remove(modelRef.current);
       modelRef.current = null;
     }
@@ -191,7 +216,7 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
       },
       (progress) => {
         const percent = (progress.loaded / progress.total * 100);
-        console.log('🎯 Loading cursor model:', percent + '%');
+        console.log('🎯 Loading cursor model:', percent.toFixed(1) + '%');
       },
       (error) => {
         console.error('❌ Error loading cursor model:', error);
@@ -208,13 +233,34 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
         setIsLoaded(true);
       }
     );
-  }, [currentMode, baseScale, getModelPath]);
+  }, [currentMode, getModelPath]); // Removed baseScale dependency
 
-  // Update renderer size efficiently
+  // Update model scale when baseScale changes - OPTIMIZED
   useEffect(() => {
-    if (rendererRef.current) {
-      rendererRef.current.setSize(size, size);
+    if (modelRef.current && isLoaded) {
+      const targetScale = isHovering ? baseScale * 1.1 : baseScale;
+      console.log(`📏 Updating model scale: ${targetScale} (base: ${baseScale}, hover: ${isHovering})`);
+      modelRef.current.scale.set(targetScale, targetScale, targetScale);
+    } else {
+      console.log(`🚫 Scale update skipped - modelRef: ${!!modelRef.current}, isLoaded: ${isLoaded}`);
     }
+  }, [baseScale, isLoaded, isHovering]);
+
+  // Update renderer size efficiently - THROTTLED
+  useEffect(() => {
+    if (!rendererRef.current) {
+      console.log(`🚫 Renderer size update skipped - rendererRef: ${!!rendererRef.current}`);
+      return;
+    }
+
+    console.log(`📐 Updating renderer size to: ${size}x${size}`);
+    // Throttle size updates to prevent excessive resizing
+    const timeoutId = setTimeout(() => {
+      rendererRef.current.setSize(size, size);
+      console.log(`✅ Renderer size updated to: ${size}x${size}`);
+    }, 16); // ~60fps
+
+    return () => clearTimeout(timeoutId);
   }, [size]);
 
   // Handle mouse movement with throttling
@@ -231,6 +277,7 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     };
 
     const handleMouseEnter = () => {
+      console.log('🖱️ Mouse entered cursor area');
       setIsHovering(true);
       if (modelRef.current && !isClicking) {
         modelRef.current.scale.set(baseScale * 1.1, baseScale * 1.1, baseScale * 1.1);
@@ -238,6 +285,7 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     };
 
     const handleMouseLeave = () => {
+      console.log('🖱️ Mouse left cursor area');
       setIsHovering(false);
       if (modelRef.current && !isClicking) {
         modelRef.current.scale.set(baseScale, baseScale, baseScale);
@@ -261,6 +309,7 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
   // Handle click animation with better state management
   useEffect(() => {
     const handleMouseDown = () => {
+      console.log('🖱️ Mouse down detected');
       setIsClicking(true);
       // Remove scale down effect - cursor stays the same size
       if (modelRef.current) {
@@ -271,6 +320,7 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     };
 
     const handleMouseUp = () => {
+      console.log('🖱️ Mouse up detected');
       setIsClicking(false);
       if (modelRef.current) {
         // Restore scale based on hover state
