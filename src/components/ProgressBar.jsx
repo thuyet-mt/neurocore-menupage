@@ -95,18 +95,8 @@ const ProgressBar = ({
     setIsIntentionalDrag(false);
   };
 
-  const handleClick = (e) => {
-    if (disabled) return;
-    
-    const rect = progressBarRef.current.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const progressBarWidth = 239 - 40;
-    const newPercentage = Math.max(0, Math.min(1, clickX / progressBarWidth));
-    const newValue = min + (newPercentage * (max - min));
-    
-    console.log(`🖱️ ProgressBar clicked - Value: ${value} → ${newValue} (click at ${clickX}px)`);
-    onChange(newValue);
-  };
+  // Removed handleClick to prevent automatic value changes on click
+  // Only drag operations are allowed for intentional updates
 
   useEffect(() => {
     if (isDragging) {
@@ -132,7 +122,6 @@ const ProgressBar = ({
       <div 
         className="progress-bar"
         ref={progressBarRef}
-        onClick={handleClick}
       >
         <div 
           className="progress-fill"
