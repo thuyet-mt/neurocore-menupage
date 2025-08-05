@@ -262,9 +262,11 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
   useEffect(() => {
     const handleMouseDown = () => {
       setIsClicking(true);
+      // Remove scale down effect - cursor stays the same size
       if (modelRef.current) {
-        // Quick scale down for click feedback
-        modelRef.current.scale.set(baseScale * 0.8, baseScale * 0.8, baseScale * 0.8);
+        // Keep current scale without shrinking
+        const currentScale = isHovering ? baseScale * 1.1 : baseScale;
+        modelRef.current.scale.set(currentScale, currentScale, currentScale);
       }
     };
 
