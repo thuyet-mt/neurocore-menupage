@@ -1,10 +1,13 @@
-import React, { memo } from 'react';
+import React, { memo, useRef } from 'react';
 import Cursor3D from './Cursor3D';
 
-// Memoized wrapper to prevent unnecessary re-renders
+// Simple memoized wrapper for Cursor3D - always enabled
 const OptimizedCursor3D = memo(({ size, onOffsetChange }) => {
-  console.log(`🎯 OptimizedCursor3D rendering with size: ${size}`);
+  const renderCountRef = useRef(0);
+  renderCountRef.current += 1;
   
+  console.log(`🎯 OptimizedCursor3D rendering #${renderCountRef.current} with size: ${size}`);
+
   return (
     <Cursor3D 
       size={size} 
@@ -12,19 +15,21 @@ const OptimizedCursor3D = memo(({ size, onOffsetChange }) => {
     />
   );
 }, (prevProps, nextProps) => {
-  // Custom comparison to prevent re-renders when size changes are minimal
   const sizeDiff = Math.abs(prevProps.size - nextProps.size);
-  const shouldSkipRender = sizeDiff < 10 && prevProps.onOffsetChange === nextProps.onOffsetChange;
+  const onOffsetChangeChanged = prevProps.onOffsetChange !== nextProps.onOffsetChange;
+  
+  // Simple skip logic - only skip if size change is small and onOffsetChange unchanged
+  const shouldSkip = sizeDiff < 10 && !onOffsetChangeChanged;
   
   console.log(`🔍 OptimizedCursor3D memo comparison:`, {
     prevSize: prevProps.size,
     nextSize: nextProps.size,
     sizeDiff: sizeDiff.toFixed(1),
-    onOffsetChangeChanged: prevProps.onOffsetChange !== nextProps.onOffsetChange,
-    shouldSkipRender: shouldSkipRender
+    onOffsetChangeChanged,
+    shouldSkip
   });
   
-  return shouldSkipRender;
+  return shouldSkip;
 });
 
 OptimizedCursor3D.displayName = 'OptimizedCursor3D';
