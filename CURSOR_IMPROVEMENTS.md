@@ -112,13 +112,13 @@ These values position the click point at the top-left corner of the cursor.
 
 ### Supported Models
 - **Dark Theme**: `hand_robot_dark_v2.glb`
-- **Gold Theme**: `hand_robot_gold_v2.glb`
-- **Light/Gold Theme**: `hand_robot_gold_v2.glb`
+- **Balanced Theme**: `hand_robot_balance_v2.glb`
+- **Light/Balanced Theme**: `hand_robot_balance_v2.glb`
 
 ### Fallback Behavior
 If 3D models fail to load, a simple colored sphere appears:
 - **Dark Theme**: White sphere
-- **Light/Gold Themes**: Black sphere
+- **Light/Balanced Themes**: Black sphere
 
 ## 🔍 Troubleshooting
 

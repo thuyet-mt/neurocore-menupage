@@ -61,7 +61,7 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
         case 'dark':
           return '/neuro_core/config/models_3d/hand_robot_dark_v2.glb';
         case 'balance':
-          return '/neuro_core/config/models_3d/hand_robot_gold_v2.glb';
+          return '/neuro_core/config/models_3d/hand_robot_balance_v2.glb';
         case 'light':
           return '/neuro_core/config/models_3d/hand_robot_light_v2.glb';
       }

@@ -101,7 +101,7 @@ After getting the application running:
    - **[Cursor Improvements](CURSOR_IMPROVEMENTS.md)** - 3D cursor system details
 
 2. **Explore Features**:
-   - Test different themes (Light, Dark, Gold)
+   - Test different themes (Light, Dark, Balanced)
    - Adjust cursor size with progress bar
    - Try the calibration system
    - Test backend connections
@@ -116,7 +116,7 @@ After getting the application running:
 - [ ] Application loads without errors
 - [ ] All 7 function buttons are visible
 - [ ] 3D logo rotates when clicked
-- [ ] Theme switching works (Light → Dark → Gold)
+- [ ] Theme switching works (Light → Dark → Balanced)
 - [ ] Progress bar adjusts cursor size
 - [ ] Cursor calibration opens with `Ctrl+Shift+C`
 - [ ] Testing pages are accessible

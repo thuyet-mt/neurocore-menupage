@@ -128,7 +128,7 @@ npm run preview  # Preview build
 Nhấn `Ctrl+Shift+C` để mở panel calibration cursor. Để thông tin chi tiết, xem **[🎮 Cải tiến Cursor](CURSOR_IMPROVEMENTS.md)**.
 
 ### Chuyển đổi Theme
-Click vào **Mode Button** (góc trên bên phải) để chuyển qua Light → Dark → Gold themes.
+Click vào **Mode Button** (góc trên bên phải) để chuyển qua Light → Dark → Balanced themes.
 
 ### Thanh Progress
 Sử dụng thanh progress ở dưới để điều chỉnh kích thước cursor 3D (250px - 1000px).
