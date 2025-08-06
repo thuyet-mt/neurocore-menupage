@@ -3,6 +3,7 @@ import './NotificationSystem.css';
 
 const NotificationSystem = () => {
   const [notifications, setNotifications] = useState([]);
+  const timeoutIdsRef = React.useRef([]);
 
   const addNotification = (message, type = 'info', duration = 3000) => {
     const id = Date.now() + Math.random();
@@ -12,13 +13,12 @@ const NotificationSystem = () => {
       type,
       timestamp: Date.now()
     };
-
     setNotifications(prev => [...prev, notification]);
-
     // Auto remove after duration
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       removeNotification(id);
     }, duration);
+    timeoutIdsRef.current.push(timeoutId);
   };
 
   const removeNotification = (id) => {
@@ -30,6 +30,9 @@ const NotificationSystem = () => {
     window.addNotification = addNotification;
     return () => {
       delete window.addNotification;
+      // Cleanup all timeouts
+      timeoutIdsRef.current.forEach(clearTimeout);
+      timeoutIdsRef.current = [];
     };
   }, []);
 

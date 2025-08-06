@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 
 export const useThrottledProgress = (initialValue = 35, throttleMs = 16) => {
   const [progressValue, setProgressValue] = useState(initialValue);
@@ -37,6 +37,14 @@ export const useThrottledProgress = (initialValue = 35, throttleMs = 16) => {
       lastUpdateRef.current = newValue;
     }, throttleMs);
   }, [throttleMs, progressValue]);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   return [progressValue, updateProgress];
 }; 

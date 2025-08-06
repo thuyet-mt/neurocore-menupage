@@ -130,13 +130,11 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     // Animation loop with better performance
     const animate = () => {
       animationFrameRef.current = requestAnimationFrame(animate);
-
       // Update animations
       if (mixerRef.current) {
         const delta = clockRef.current.getDelta();
         mixerRef.current.update(delta);
       }
-
       // Render
       renderer.render(scene, camera);
     };
@@ -153,7 +151,32 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
       if (mountRef.current && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement);
       }
-      renderer.dispose();
+      // Dispose Three.js resources
+      if (modelRef.current) {
+        modelRef.current.traverse((child) => {
+          if (child.geometry) child.geometry.dispose();
+          if (child.material) {
+            if (Array.isArray(child.material)) {
+              child.material.forEach((mat) => mat && mat.dispose());
+            } else {
+              child.material.dispose && child.material.dispose();
+            }
+          }
+        });
+      }
+      if (rendererRef.current) {
+        rendererRef.current.dispose();
+      }
+      if (sceneRef.current) {
+        sceneRef.current.clear();
+      }
+      if (mixerRef.current) {
+        mixerRef.current.stopAllAction();
+        if (mixerRef.current.uncacheRoot) {
+          mixerRef.current.uncacheRoot(mixerRef.current.getRoot && mixerRef.current.getRoot());
+        }
+      }
+      // Remove all event listeners (see below for mouse/key events)
     };
   }, []); // Only run once on mount
 

@@ -131,6 +131,29 @@ const Logo3DModel = ({
     };
 
     loadModel();
+    // Cleanup function
+    return () => {
+      // Dispose animation mixer
+      if (mixerRef.current) {
+        mixerRef.current.stopAllAction();
+        if (mixerRef.current.uncacheRoot) {
+          mixerRef.current.uncacheRoot(mixerRef.current.getRoot && mixerRef.current.getRoot());
+        }
+      }
+      // Dispose model resources
+      if (model && model.scene) {
+        model.scene.traverse((child) => {
+          if (child.geometry) child.geometry.dispose();
+          if (child.material) {
+            if (Array.isArray(child.material)) {
+              child.material.forEach((mat) => mat && mat.dispose());
+            } else {
+              child.material.dispose && child.material.dispose();
+            }
+          }
+        });
+      }
+    };
   }, [enableAnimations, animationSpeed, loopAnimations]);
 
   // Animation loop
