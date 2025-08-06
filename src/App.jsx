@@ -15,7 +15,7 @@ function App() {
   
   console.log(`🔄 App re-render #${renderCountRef.current}`);
   
-  const [progressValue, updateProgress] = useThrottledProgress(35, 16); // Throttled progress
+  const [progressValue, updateProgress] = useThrottledProgress(35, 32); // Increased throttle to 32ms
   const [cursorOffset, setCursorOffset] = useState({ x: 0.15, y: 0.1 });
 
   // Calculate cursor size based on progress value (5x larger) - MEMOIZED
@@ -34,8 +34,6 @@ function App() {
     console.log(`🎯 Cursor offset changed in App:`, newOffset);
     setCursorOffset(newOffset);
   }, []);
-
-
 
   return (
     <ErrorBoundary>

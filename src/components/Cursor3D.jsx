@@ -27,6 +27,7 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
   const animationFrameRef = useRef(null);
   const loaderRef = useRef(null);
   const isInitializedRef = useRef(false);
+  const lastSizeRef = useRef(size);
 
   // Load cursor offset from localStorage or use defaults
   const [cursorOffset, setCursorOffset] = useState(() => {
@@ -54,21 +55,23 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     return scale;
   }, [size]);
 
-  // Get model path based on theme
-  const getModelPath = useCallback((theme) => {
+  // Get model path based on theme - MEMOIZED
+  const getModelPath = useMemo(() => {
     const path = (() => {
-      switch (theme) {
+      switch (currentMode) {
         case 'dark':
           return '/neuro_core/config/models_3d/hand_robot_dark_v2.glb';
         case 'balance':
           return '/neuro_core/config/models_3d/hand_robot_balance_v2.glb';
         case 'light':
           return '/neuro_core/config/models_3d/hand_robot_light_v2.glb';
+        default:
+          return '/neuro_core/config/models_3d/hand_robot_balance_v2.glb';
       }
     })();
-    console.log(`🎨 Model path for theme ${theme}: ${path}`);
+    console.log(`🎨 Model path for theme ${currentMode}: ${path}`);
     return path;
-  }, []);
+  }, [currentMode]);
 
   // Calculate cursor offset to align fingertip with mouse position
   const getCursorOffset = useCallback(() => {
@@ -199,7 +202,7 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
       mixerRef.current = null;
     }
 
-    const modelPath = getModelPath(currentMode);
+    const modelPath = getModelPath;
     
     loaderRef.current.load(
       modelPath,
@@ -269,10 +272,17 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     }
   }, [baseScale, isLoaded, isHovering]);
 
-  // Update renderer size efficiently - THROTTLED
+  // Update renderer size efficiently - THROTTLED AND OPTIMIZED
   useEffect(() => {
     if (!rendererRef.current) {
       console.log(`🚫 Renderer size update skipped - rendererRef: ${!!rendererRef.current}`);
+      return;
+    }
+
+    // Only update if size actually changed significantly
+    const sizeDiff = Math.abs(size - lastSizeRef.current);
+    if (sizeDiff < 5) {
+      console.log(`🚫 Size change too small (${sizeDiff}px), skipping renderer update`);
       return;
     }
 
@@ -280,8 +290,9 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     // Throttle size updates to prevent excessive resizing
     const timeoutId = setTimeout(() => {
       rendererRef.current.setSize(size, size);
+      lastSizeRef.current = size;
       console.log(`✅ Renderer size updated to: ${size}x${size}`);
-    }, 16); // ~60fps
+    }, 32); // Increased to 32ms for better performance
 
     return () => clearTimeout(timeoutId);
   }, [size]);

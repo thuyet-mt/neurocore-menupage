@@ -1,7 +1,7 @@
 import React, { memo, useRef } from 'react';
 import Cursor3D from './Cursor3D';
 
-// Simple memoized wrapper for Cursor3D - always enabled
+// Optimized memoized wrapper for Cursor3D
 const OptimizedCursor3D = memo(({ size, onOffsetChange }) => {
   const renderCountRef = useRef(0);
   renderCountRef.current += 1;
@@ -18,8 +18,8 @@ const OptimizedCursor3D = memo(({ size, onOffsetChange }) => {
   const sizeDiff = Math.abs(prevProps.size - nextProps.size);
   const onOffsetChangeChanged = prevProps.onOffsetChange !== nextProps.onOffsetChange;
   
-  // Simple skip logic - only skip if size change is small and onOffsetChange unchanged
-  const shouldSkip = sizeDiff < 10 && !onOffsetChangeChanged;
+  // Increased threshold for better performance - only skip if size change is very small
+  const shouldSkip = sizeDiff < 20 && !onOffsetChangeChanged; // Increased from 10 to 20
   
   console.log(`🔍 OptimizedCursor3D memo comparison:`, {
     prevSize: prevProps.size,
