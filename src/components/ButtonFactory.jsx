@@ -2,6 +2,7 @@ import React from 'react';
 import GoldenButton from './GoldenButton';
 import { BUTTON_CONFIG } from '../constants/buttons';
 import { useTheme } from '../contexts/ThemeContext';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // Import all icons dynamically
 const importIcon = (iconName) => {
@@ -21,6 +22,7 @@ const ButtonFactory = ({
   tooltipPosition = 'top'
 }) => {
   const { currentMode } = useTheme();
+  const { getText } = useLanguage();
   const config = BUTTON_CONFIG[buttonType];
   
   if (!config) {
@@ -67,7 +69,7 @@ const ButtonFactory = ({
       <GoldenButton
         theme={currentMode === 'dark' ? 'dark' : currentMode === 'light' ? 'light' : 'balance'}
         onClick={onClick}
-        tooltip={`${config.title} Button - Click me!`}
+        tooltip={`tooltip_${config.id}`}
         tooltipPosition={tooltipPosition}
         size={size}
         icon={icon}

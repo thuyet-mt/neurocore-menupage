@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // Centralized configuration for all theme styles
 const themeStyles = {
@@ -98,6 +99,7 @@ const BackButton = ({
   tooltipPosition = 'top', // 'top', 'bottom', 'left', 'right'
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { getText } = useLanguage();
   
   const styles = themeStyles[theme] || themeStyles.balance;
 
@@ -263,11 +265,11 @@ const BackButton = ({
             {Array.isArray(tooltip)
               ? tooltip.map((line, index) => (
                   <React.Fragment key={index}>
-                    {line}
+                    {typeof line === 'string' && line.startsWith('tooltip_') ? getText(line) : line}
                     {index < tooltip.length - 1 && <br />}
                   </React.Fragment>
                 ))
-              : tooltip
+              : typeof tooltip === 'string' && tooltip.startsWith('tooltip_') ? getText(tooltip) : tooltip
             }
           </span>
           <div

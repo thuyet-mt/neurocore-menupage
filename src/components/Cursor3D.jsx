@@ -92,7 +92,7 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     }
   }, [onOffsetChange]);
 
-  // Initialize Three.js scene
+  // Initialize Three.js scene - OPTIMIZED
   useEffect(() => {
     if (!mountRef.current || isInitializedRef.current) {
       console.log(`🚫 Scene initialization skipped - mountRef: ${!!mountRef.current}, isInitialized: ${isInitializedRef.current}`);
@@ -145,19 +145,22 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
 
     console.log('✅ Scene initialization complete');
 
-    // Cleanup function
+    // Cleanup function - IMPROVED
     return () => {
       console.log('🧹 Cleaning up scene');
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
       }
       if (mountRef.current && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement);
       }
-      // Dispose Three.js resources
+      // Dispose Three.js resources - IMPROVED
       if (modelRef.current) {
         modelRef.current.traverse((child) => {
-          if (child.geometry) child.geometry.dispose();
+          if (child.geometry) {
+            child.geometry.dispose();
+          }
           if (child.material) {
             if (Array.isArray(child.material)) {
               child.material.forEach((mat) => mat && mat.dispose());
@@ -166,20 +169,27 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
             }
           }
         });
+        modelRef.current = null;
       }
       if (rendererRef.current) {
         rendererRef.current.dispose();
+        rendererRef.current = null;
       }
       if (sceneRef.current) {
         sceneRef.current.clear();
+        sceneRef.current = null;
       }
       if (mixerRef.current) {
         mixerRef.current.stopAllAction();
         if (mixerRef.current.uncacheRoot) {
           mixerRef.current.uncacheRoot(mixerRef.current.getRoot && mixerRef.current.getRoot());
         }
+        mixerRef.current = null;
       }
-      // Remove all event listeners (see below for mouse/key events)
+      if (loaderRef.current) {
+        loaderRef.current = null;
+      }
+      isInitializedRef.current = false;
     };
   }, []); // Only run once on mount
 
@@ -196,6 +206,16 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     if (modelRef.current) {
       console.log('🗑️ Removing existing model');
       sceneRef.current.remove(modelRef.current);
+      modelRef.current.traverse((child) => {
+        if (child.geometry) child.geometry.dispose();
+        if (child.material) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach((mat) => mat && mat.dispose());
+          } else {
+            child.material.dispose && child.material.dispose();
+          }
+        }
+      });
       modelRef.current = null;
     }
     if (mixerRef.current) {
@@ -412,6 +432,20 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
     };
   }, [isLoaded, baseScale, isHovering]);
 
+  // Calibration keyboard shortcut
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+        e.preventDefault();
+        console.log('🎛️ Calibration shortcut triggered');
+        // You can implement calibration UI here
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   // Calculate cursor position with proper offset
   const offset = getCursorOffset();
   const cursorStyle = {
@@ -426,9 +460,10 @@ const Cursor3D = ({ size = 150, onOffsetChange }) => {
   };
 
   return (
-    <div
-      ref={mountRef}
+    <div 
+      ref={mountRef} 
       style={cursorStyle}
+      className="cursor-3d-container"
     />
   );
 };

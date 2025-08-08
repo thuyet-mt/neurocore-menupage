@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTheme } from '../contexts/ThemeContext';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // Centralized configuration for all theme styles
 const themeStyles = {
@@ -140,6 +141,7 @@ const ModeButton = ({
   tooltipPosition = 'top',
 }) => {
   const { currentMode, toggleMode } = useTheme();
+  const { getText } = useLanguage();
   const [isHovered, setIsHovered] = useState(false);
   
   const mode = BUTTON_MODES.find(m => m.key === currentMode) || BUTTON_MODES[0];
@@ -323,7 +325,9 @@ const ModeButton = ({
         
         <div style={tooltipBoxStyle}>
           <span style={{ position: 'relative', zIndex: 1 }}>
-            {tooltip || `Switch to ${mode.label}`}
+            {typeof tooltip === 'string' && tooltip.startsWith('tooltip_') 
+              ? getText(tooltip) 
+              : tooltip || `Switch to ${mode.label}`}
           </span>
           <div
             style={{
