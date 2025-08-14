@@ -25,6 +25,7 @@ import NeurobaseIcon from "../assets/neurobase_icon.svg"
 import NeuropacksIcon from "../assets/neuropacks_icon.svg"
 import NeurocontrolIcon from "../assets/neurocontrol_icon.svg"
 import NeuroalertIcon from "../assets/neuroalert_icon.svg"
+import BenchmarkPanel from "./BenchmarkPanel";
 // BackButton and BackIcon imports removed - not needed in neurocore
 
 
@@ -629,18 +630,28 @@ export default function Neurocore({ progressValue = 35, onProgressChange = () =>
         {/* Có thể thêm các component menu ở đây */}
       </ContainerFrameMenu>
       
-      {/* Thông báo popup */}
+      {/* Benchmark Panel */}
+      <BenchmarkPanel />
+
+      {/* Notification System */}
       {showNotification && (
-        <div className="notification-popup">
-          <div className="notification-content">
-            <span className="notification-message">{notificationMessage}</span>
-            <button 
-              className="notification-close"
-              onClick={() => setShowNotification(false)}
-            >
-              ×
-            </button>
-          </div>
+        <div
+          style={{
+            position: "fixed",
+            top: "20px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "rgba(0, 0, 0, 0.9)",
+            color: "white",
+            padding: "15px 20px",
+            borderRadius: "8px",
+            zIndex: 10000,
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            animation: "slideDown 0.3s ease-out",
+          }}
+        >
+          {notificationMessage}
         </div>
       )}
     </div>
